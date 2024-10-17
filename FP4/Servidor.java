@@ -18,11 +18,10 @@ public class Servidor {
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             System.out.println("Echo server started on port " + PORT);
 
-            // Thread to broadcast messages to all clients periodically
             scheduler.scheduleAtFixedRate(() -> {
                 synchronized (clients) {
                     Iterator<Socket> iterator = clients.iterator();
-                    while (!iterator.hasNext()) {
+                    while (!iterator.hasNext()) { // ???? - erro nas mensagens
                         Socket client = iterator.next();
                         try (PrintWriter out = new PrintWriter(client.getOutputStream(), true)) {
                             synchronized (messages) {
